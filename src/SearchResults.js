@@ -1,9 +1,38 @@
 import React from "react";
 import moment from "moment";
 
+const SearchResultsRow = props => {
+  const [isSelected, setIsSelected] = React.useState(false);
+
+  const highlight = () => {
+    setIsSelected(!isSelected);
+  };
+
+  return (
+    <tr onClick={highlight} className={isSelected ? "highlighted" : ""}>
+      <td>{props.row.id}</td>
+      <td>{props.row.title}</td>
+      <td>{props.row.firstName}</td>
+      <td>{props.row.surname}</td>
+      <td>{props.row.email}</td>
+      <td>{props.row.roomId}</td>
+      <td>{props.row.checkInDate}</td>
+      <td>{props.row.checkOutDate}</td>
+
+      {/* Item 7 of the homework */}
+      <td>
+        {moment(props.row.checkOutDate).diff(
+          moment(props.row.checkInDate),
+          "days"
+        )}
+      </td>
+    </tr>
+  );
+};
+
 const SearchResults = props => {
   return (
-    <table class="table table-striped">
+    <table className="table table-striped">
       <thead>
         <tr>
           <th>Id</th>
@@ -20,27 +49,8 @@ const SearchResults = props => {
         </tr>
       </thead>
       <tbody>
-        {props.results.map(element => {
-          return (
-            <tr>
-              <td>{element.id}</td>
-              <td>{element.title}</td>
-              <td>{element.firstName}</td>
-              <td>{element.surname}</td>
-              <td>{element.email}</td>
-              <td>{element.roomId}</td>
-              <td>{element.checkInDate}</td>
-              <td>{element.checkOutDate}</td>
-
-              {/* Item 7 of the homework */}
-              <td>
-                {moment(element.checkOutDate).diff(
-                  moment(element.checkInDate),
-                  "days"
-                )}
-              </td>
-            </tr>
-          );
+        {props.results.map((element, index) => {
+          return <SearchResultsRow row={element} key={index} />;
         })}
       </tbody>
     </table>

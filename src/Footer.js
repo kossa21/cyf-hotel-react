@@ -1,9 +1,8 @@
 import React from "react";
 
 const Footer = props => {
-  console.log(props);
   return (
-    <ul class="footerUl">
+    <ul className="footerUl">
       {props.footerElements.map((element, index) => (
         <li key={index}>{element}</li>
       ))}
